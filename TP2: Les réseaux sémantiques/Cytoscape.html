@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réseau Sémantique</title>
+  <script src="https://unpkg.com/cytoscape@3.22.0/dist/cytoscape.min.js"></script>
+  <style>
+    #cy {
+      height: 600px;
+      width: 100%;
+      background-color: #f7f7f7;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Réseau Sémantique Interactif</h1>
+  <div id="cy"></div>
+
+  <script>
+    // Définir les éléments du graphe : nœuds et arêtes
+    const elements = [
+      // Nœuds (concepts)
+      { data: { id: "AI" } },
+      { data: { id: "NLP" } },
+      { data: { id: "robots" } },
+      { data: { id: "tasks" } },
+      { data: { id: "personalization" } },
+      { data: { id: "waves" } },
+      { data: { id: "Issues" } },
+      { data: { id: "management" } },
+      { data: { id: "businesses" } },
+      { data: { id: "behavior" } },
+      { data: { id: "sector" } },
+      { data: { id: "companies" } },
+      { data: { id: "data" } },
+      { data: { id: "vision" } },
+      { data: { id: "machines" } },
+      { data: { id: "intelligence" } },
+      { data: { id: "industries" } },
+      { data: { id: "systems" } },
+      { data: { id: "products" } },
+
+      // Arêtes (relations entre les concepts)
+      { data: { source: "AI", target: "sector" } },
+      { data: { source: "AI", target: "NLP" } },
+      { data: { source: "robots", target: "tasks" } },
+      { data: { source: "personalization", target: "waves" } },
+      { data: { source: "Issues", target: "management" } },
+      { data: { source: "businesses", target: "behavior" } },
+      { data: { source: "companies", target: "data" } },
+      { data: { source: "vision", target: "machines" } },
+      { data: { source: "intelligence", target: "industries" } },
+      { data: { source: "systems", target: "products" } }
+    ];
+
+    // Initialiser Cytoscape.js
+    const cy = cytoscape({
+      container: document.getElementById('cy'),
+      elements: elements,
+
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'background-color': '#66b3ff',
+            'label': 'data(id)', // Afficher le nom du concept
+            'text-valign': 'center',
+            'text-halign': 'center',
+            'font-size': '14px',
+            'color': '#fff'
+          }
+        },
+        {
+          selector: 'edge',
+          style: {
+            'width': 2,
+            'line-color': '#cccccc',
+            'target-arrow-color': '#cccccc',
+            'target-arrow-shape': 'triangle'
+          }
+        }
+      ],
+
+      layout: {
+        name: 'circle',
+        padding: 10
+      }
+    });
+
+    // Interactions avec les nœuds et arêtes
+    cy.on('tap', 'node', function(evt) {
+      const node = evt.target;
+      alert('Vous avez cliqué sur : ' + node.data('id'));
+    });
+
+    cy.on('tap', 'edge', function(evt) {
+      const edge = evt.target;
+      alert('Relation entre : ' + edge.source().data('id') + ' et ' + edge.target().data('id'));
+    });
+  </script>
+
+</body>
+</html>
